@@ -1,0 +1,32 @@
+[
+  {
+    "model": "api.appointment",
+    "pk": 1,
+    "fields": {
+      "doctor": 1,
+      "patient": 1,
+      "exercise": 1,
+      "appointment_date": "2023-07-28T10:00:00"
+    }
+  },
+  {
+    "model": "api.appointment",
+    "pk": 2,
+    "fields": {
+      "doctor": 1,
+      "patient": 1,
+      "exercise": 2,
+      "appointment_date": "2023-07-28T11:00:00"
+    }
+  },
+  {
+    "model": "api.appointment",
+    "pk": 3,
+    "fields": {
+      "doctor": 1,
+      "patient": 1,
+      "exercise": 3,
+      "appointment_date": "2023-07-28T12:00:00"
+    }
+  }
+]

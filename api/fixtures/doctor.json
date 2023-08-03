@@ -1,0 +1,29 @@
+[
+  {
+    "model": "api.doctor",
+    "pk": 1,
+    "fields": {
+      "name": "Доктор Иванов",
+      "speciality": 1,
+      "patients": [1]
+    }
+  },
+  {
+    "model": "api.doctor",
+    "pk": 2,
+    "fields": {
+      "name": "Доктор Петров",
+      "speciality": 2,
+      "patients": [2]
+    }
+  },
+  {
+    "model": "api.doctor",
+    "pk": 3,
+    "fields": {
+      "name": "Доктор Сидоров",
+      "speciality": 3,
+      "patients": [1, 2]
+    }
+  }
+]

@@ -1,0 +1,28 @@
+{% extends 'api/html/base.html' %}
+
+{% load static %}
+{% load compile_static %}
+
+{% block main %}
+
+    <table>
+        <h1>Doctors Information</h1>
+        <tr>
+            <th>Name</th>
+            <th>Speciality</th>
+            <th>Patients</th>
+        </tr>
+        {% for doctor in doctors %}
+            <tr>
+                <td>{{ doctor.name }}</td>
+                <td>{{ doctor.speciality }}</td>
+                <td>
+                    {% for patient in doctor.patients.all %}
+                        {{ patient.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

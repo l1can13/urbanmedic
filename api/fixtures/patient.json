@@ -1,0 +1,16 @@
+[
+  {
+    "model": "api.patient",
+    "pk": 1,
+    "fields": {
+      "name": "Пациент Иванов"
+    }
+  },
+  {
+    "model": "api.patient",
+    "pk": 2,
+    "fields": {
+      "name": "Пациент Петров"
+    }
+  }
+]

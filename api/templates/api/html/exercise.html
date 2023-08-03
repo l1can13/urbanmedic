@@ -1,0 +1,27 @@
+{% extends 'api/html/base.html' %}
+
+{% block main %}
+
+    <h1>Exercises Information</h1>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Frequency</th>
+            <th>Specializations</th>
+        </tr>
+        {% for exercise in exercises %}
+            <tr>
+                <td>{{ exercise.title }}</td>
+                <td>{{ exercise.description }}</td>
+                <td>{{ exercise.get_frequency_display }}</td>
+                <td>
+                    {% for speciality in exercise.specialisations.all %}
+                        {{ speciality.title }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

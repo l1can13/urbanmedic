@@ -1,0 +1,26 @@
+{% extends 'api/html/base.html' %}
+{% load static %}
+{% load compile_static %}
+
+{% block main %}
+    {% for patient in patients %}
+        <h1>Пациент: {{ patient.name }}</h1>
+        <h2>Назначенные пациенту упражнения</h2>
+        <table>
+            <tr>
+                <th>Врач</th>
+                <th>Упражнение</th>
+                <th>Описание</th>
+                <th>Частота</th>
+            </tr>
+            {% for appointment in patient.appointment_set.all %}
+                <tr>
+                    <td>{{ appointment.doctor.name }}</td>
+                    <td>{{ appointment.exercise.title }}</td>
+                    <td>{{ appointment.exercise.description }}</td>
+                    <td>{{ appointment.exercise.get_frequency_display }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+{% endblock %}

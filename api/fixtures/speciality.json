@@ -1,0 +1,23 @@
+[
+  {
+    "model": "api.speciality",
+    "pk": 1,
+    "fields": {
+      "title": "Терапевт"
+    }
+  },
+  {
+    "model": "api.speciality",
+    "pk": 2,
+    "fields": {
+      "title": "Окулист"
+    }
+  },
+  {
+    "model": "api.speciality",
+    "pk": 3,
+    "fields": {
+      "title": "Хирург"
+    }
+  }
+]

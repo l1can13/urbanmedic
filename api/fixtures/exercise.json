@@ -1,0 +1,32 @@
+[
+  {
+    "model": "api.exercise",
+    "pk": 1,
+    "fields": {
+      "title": "Упражнение 1",
+      "description": "Описание упражнения 1",
+      "frequency": "every_hour",
+      "specialisations": [1, 2]
+    }
+  },
+  {
+    "model": "api.exercise",
+    "pk": 2,
+    "fields": {
+      "title": "Упражнение 2",
+      "description": "Описание упражнения 2",
+      "frequency": "every_day",
+      "specialisations": [2, 3]
+    }
+  },
+  {
+    "model": "api.exercise",
+    "pk": 3,
+    "fields": {
+      "title": "Упражнение 3",
+      "description": "Описание упражнения 3",
+      "frequency": "every_week",
+      "specialisations": [1, 3]
+    }
+  }
+]
