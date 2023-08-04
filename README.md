@@ -1,92 +1,313 @@
-# urbanmedic
+# API методы
 
+Данный API предоставляет возможность управления информацией о докторах, пациентах и упражнениях.
 
+## Установка и запуск
 
-## Getting started
+1. Убедитесь, что у вас установлен Python версии 3.x.
+2. Установите зависимости, выполнив команду: `pip install -r requirements.txt`.
+3. Запустите сервер, выполните: `python manage.py runserver`.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Доступные методы API
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### `api/doctor/`
 
-## Add your files
+#### Описание
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Метод для получения списка всех докторов или создания нового доктора.
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/urbanmedic/urbanmedic.git
-git branch -M main
-git push -uf origin main
-```
+#### Методы
 
-## Integrate with your tools
+- `GET`: Возвращает список всех докторов.
 
-- [ ] [Set up project integrations](https://gitlab.com/urbanmedic/urbanmedic/-/settings/integrations)
+  **Параметры запроса**: Отсутствуют.
 
-## Collaborate with your team
+  **Параметры ответа**:
+  
+  - `id` (int): Идентификатор доктора.
+  - `name` (str): Имя доктора.
+  - `speciality` (int): Идентификатор специальности доктора.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+- `POST`: Создает нового доктора.
 
-## Test and Deploy
+  **Параметры запроса**:
+  
+  - `name` (str, обязательный): Имя нового доктора.
+  - `speciality` (int, обязательный): Идентификатор специальности нового доктора.
 
-Use the built-in continuous integration in GitLab.
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### `api/doctor/<int:pk>/`
 
-***
+#### Описание
 
-# Editing this README
+Метод для получения информации о конкретном докторе, обновления его данных или удаления.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+#### Методы
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+- `GET`: Возвращает информацию о конкретном докторе.
 
-## Name
-Choose a self-explaining name for your project.
+  **Параметры запроса**: Отсутствуют.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+  **Параметры ответа**:
+  
+  - `id` (int): Идентификатор доктора.
+  - `name` (str): Имя доктора.
+  - `speciality` (int): Идентификатор специальности доктора.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+- `PUT`: Обновляет данные конкретного доктора.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+  **Параметры запроса**:
+  
+  - `name` (str, обязательный): Новое имя доктора.
+  - `speciality` (int, обязательный): Новый идентификатор специальности доктора.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+- `PATCH`: Частично обновляет данные конкретного доктора.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+  **Параметры запроса**:
+  
+  - `name` (str, необязательный): Новое имя доктора.
+  - `speciality` (int, необязательный): Новый идентификатор специальности доктора.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+- `DELETE`: Удаляет конкретного доктора.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+  **Параметры запроса**: Отсутствуют.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### `api/doctor/<int:pk>/exercises/`
 
-## License
-For open source projects, say how it is licensed.
+#### Описание
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Метод для получения списка упражнений, которые назначены конкретному доктору.
+
+#### Методы
+
+- `GET`: Возвращает список упражнений, назначенных конкретному доктору.
+
+  **Параметры запроса**: Отсутствуют.
+
+  **Параметры ответа**:
+  
+  - `id` (int): Идентификатор упражнения.
+  - `title` (str): Название упражнения.
+  - `description` (str): Описание упражнения.
+  - `frequency` (str): Частота выполнения упражнения (может быть "every_hour", "every_day", "every_week" или "every_month").
+
+### `api/doctor/<int:pk>/appoint/`
+
+#### Описание
+
+Метод для назначения нового упражнения пациенту конкретным доктором.
+
+#### Методы
+
+- `POST`: Назначает новое упражнение пациенту конкретным доктором.
+
+  **Параметры запроса**:
+  
+  - `patient` (int, обязательный): Идентификатор пациента, которому назначается упражнение.
+  - `exercise` (int, обязательный): Идентификатор упражнения, которое назначается.
+  - `appointment_date` (str, обязательный): Дата назначения упражнения в формате "YYYY-MM-DD HH:MM".
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
+
+### `api/patient/`
+
+#### Описание
+
+Метод для получения списка всех пациентов или создания нового пациента.
+
+#### Методы
+
+- `GET`: Возвращает список всех пациентов.
+
+  **Параметры запроса**: Отсутствуют.
+
+  **Параметры ответа**:
+  
+  - `id` (int): Идентификатор пациента.
+  - `name` (str): Имя пациента.
+
+- `POST`: Создает нового пациента.
+
+  **Параметры запроса**:
+  
+  - `name` (str, обязательный): Имя нового пациента.
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
+
+### `api/patient/<int:pk>/`
+
+#### Описание
+
+Метод для получения информации о конкретном пациенте, обновления его данных или удаления.
+
+#### Методы
+
+- `GET`: Возвращает информацию о конкретном пациенте.
+
+  **Параметры запроса**: Отсутствуют.
+
+  **Параметры ответа**:
+  
+  - `id` (int): Идентификатор пациента.
+  - `name` (str): Имя пациента.
+
+- `PUT`: Обновляет данные конкретного пациента.
+
+  **Параметры запроса**:
+  
+  - `name` (str, обязательный): Новое имя пациента.
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
+
+- `PATCH`: Частично обновляет данные конкретного пациента.
+
+  **Параметры запроса**:
+  
+  - `name` (str, необязательный): Новое имя пациента.
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
+
+- `DELETE`: Удаляет конкретного пациента.
+
+  **Параметры запроса**: Отсутствуют.
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
+
+### `api/patient/<int:pk>/exercises/`
+
+#### Описание
+
+Метод для получения списка упражнений, назначенных конкретному пациенту.
+
+#### Методы
+
+- `GET`: Возвращает список упражнений, назначенных конкретному пациенту.
+
+  **Параметры запроса**: Отсутствуют.
+
+  **Параметры ответа**:
+  
+  - `id` (int): Идентификатор упражнения.
+  - `title` (str): Название упражнения.
+  - `description` (str): Описание упражнения.
+  - `frequency` (str): Частота выполнения упражнения (может быть "every_hour", "every_day", "every_week" или "every_month").
+
+### `api/exercise/`
+
+#### Описание
+
+Метод для получения списка всех упражнений или создания нового упражнения.
+
+#### Методы
+
+- `GET`: Возвращает список всех упражнений.
+
+  **Параметры запроса**: Отсутствуют.
+
+  **Параметры ответа**:
+  
+  - `id` (int): Идентификатор упражнения.
+  - `title` (str): Название упражнения.
+  - `description` (str): Описание упражнения.
+  - `frequency` (str): Частота выполнения упражнения (может быть "every_hour", "every_day", "every_week" или "every_month").
+
+- `POST`: Создает новое упражнение.
+
+  **Параметры запроса**:
+  
+  - `title` (str, обязательный): Название нового упражнения.
+  - `description` (str, обязательный): Описание нового упражнения.
+  - `frequency` (str, обязательный): Частота выполнения упражнения (может быть "every_hour", "every_day", "every_week" или "every_month").
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
+
+### `api/exercise/<int:pk>/`
+
+#### Описание
+
+Метод для получения информации о конкретном упражнении, обновления его данных или удаления.
+
+#### Методы
+
+- `GET`: Возвращает информацию о конкретном упражнении.
+
+  **Параметры запроса**: Отсутствуют.
+
+  **Параметры ответа**:
+  
+  - `id` (int): Идентификатор упражнения.
+  - `title` (str): Название упражнения.
+  - `description` (str): Описание упражнения.
+  - `frequency` (str): Частота выполнения упражнения (может быть "every_hour", "every_day", "every_week" или "every_month").
+
+- `PUT`: Обновляет данные конкретного упражнения.
+
+  **Параметры запроса**:
+  
+  - `title` (str, обязательный): Новое название упражнения.
+  - `description` (str, обязательный): Новое описание упражнения.
+  - `frequency` (str, обязательный): Новая частота выполнения упражнения (может быть "every_hour", "every_day", "every_week" или "every_month").
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
+
+- `PATCH`: Частично обновляет данные конкретного упражнения.
+
+  **Параметры запроса**:
+  
+  - `title` (str, необязательный): Новое название упражнения.
+  - `description` (str, необязательный): Новое описание упражнения.
+  - `frequency` (str, необязательный): Новая частота выполнения упражнения (может быть "every_hour", "every_day", "every_week" или "every_month").
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
+
+- `DELETE`: Удаляет конкретное упражнение.
+
+  **Параметры запроса**: Отсутствуют.
+
+  **Параметры ответа**:
+  
+  - `status` (str): Статус операции ("success" или "error").
+  - `message` (str): Сообщение о результате операции.
