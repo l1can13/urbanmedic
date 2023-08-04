@@ -4,11 +4,10 @@ from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
-from django.utils.decorators import method_decorator
+from django.utils import timezone
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 
-from api.models import Doctor, Patient, Exercise
+from api.models import Doctor, Patient, Exercise, Appointment
 
 
 def api(request):
@@ -34,7 +33,71 @@ class DoctorView(View):
             context={'doctors': doctors if isinstance(doctors, QuerySet) else [doctors]}
         )
 
-    def post(self, request):
+    def post(self, request, pk=None):
+        if pk is not None and request.path.endswith('appoint/'):
+            try:
+                data = json.loads(request.body.decode('utf-8'))
+                patient_id = data['patient_id']
+                exercise_id = data['exercise_id']
+                doctor = Doctor.objects.get(pk=pk)
+                exercise = Exercise.objects.get(pk=exercise_id)
+                patient = Patient.objects.get(pk=patient_id)
+
+                if exercise.specialisations.filter(pk=doctor.speciality.pk).exists():
+                    if patient in doctor.patients.all():
+                        appointment_exists = Appointment.objects.filter(doctor=doctor, patient=patient,
+                                                                        exercise=exercise).exists()
+                        if appointment_exists:
+                            return JsonResponse(
+                                {
+                                    'status': 'error',
+                                    'message': 'Такое назначение уже существует.'
+                                },
+                                status=400
+                            )
+                        else:
+                            # Создаем новую запись в таблице Appointment
+                            appointment = Appointment(
+                                doctor=doctor,
+                                patient=patient,
+                                exercise=exercise,
+                                appointment_date=timezone.now()  # Используем из модуля django.utils.timezone
+                            )
+                            appointment.full_clean()
+                            appointment.save()
+
+                            return JsonResponse(
+                                {
+                                    'status': 'success',
+                                    'message': 'Назначение успешно создано.'
+                                }
+                            )
+                    else:
+                        return JsonResponse(
+                            {
+                                'status': 'error',
+                                'message': 'Данный доктор не имеет разрешения назначать упражнения данному пациенту.'
+                            },
+                            status=400
+                        )
+                else:
+                    return JsonResponse(
+                        {
+                            'status': 'error',
+                            'message': 'Данный доктор не имеет необходимой специальности для назначения этого '
+                                       'упражнения.'
+                        },
+                        status=400
+                    )
+            except (ValidationError, KeyError) as e:
+                return JsonResponse(
+                    {
+                        'status': 'error',
+                        'message': str(e)
+                    },
+                    status=400
+                )
+
         try:
             data = json.loads(request.body.decode('utf-8'))
             doctor = Doctor(
